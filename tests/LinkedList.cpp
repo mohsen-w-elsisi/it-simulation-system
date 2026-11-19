@@ -1,7 +1,7 @@
 #include <cassert>
 #include <sstream>
 
-#include "../lib/LinkedList.cpp"
+#include "LinkedList.h"
 
 int main()
 {

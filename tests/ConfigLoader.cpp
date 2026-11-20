@@ -3,7 +3,7 @@
 
 int main()
 {
-    ConfigLoader loader("test_input.txt");
+    ConfigLoader loader("testAssets/test_input.txt");
     AppConfig config = loader.load();
 
     assert(config.locations.length() == 3);

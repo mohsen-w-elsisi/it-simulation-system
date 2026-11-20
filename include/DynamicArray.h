@@ -11,6 +11,9 @@ public:
     DynamicArray();
     DynamicArray(int capacity);
     DynamicArray(T *data, int size);
+    DynamicArray(const DynamicArray<T> &other);
+    DynamicArray(DynamicArray<T> &&other);
+    DynamicArray<T> &operator=(DynamicArray<T> &&other);
 
     ~DynamicArray();
 
@@ -37,6 +40,41 @@ template <typename T>
 DynamicArray<T>::DynamicArray(T *data, int size) : data(data), capacity(size), size(size) {}
 
 template <typename T>
+DynamicArray<T>::DynamicArray(const DynamicArray<T> &other)
+    : data(new T[other.capacity]), capacity(other.capacity), size(other.size)
+{
+    for (int i = 0; i < size; i++)
+        data[i] = other.data[i];
+}
+
+template <typename T>
+DynamicArray<T>::DynamicArray(DynamicArray<T> &&other)
+    : data(other.data), capacity(other.capacity), size(other.size)
+{
+    other.data = nullptr;
+    other.capacity = 0;
+    other.size = 0;
+}
+
+template <typename T>
+DynamicArray<T> &DynamicArray<T>::operator=(DynamicArray<T> &&other)
+{
+    if (this == &other)
+        return *this;
+
+    delete[] data;
+    data = other.data;
+    capacity = other.capacity;
+    size = other.size;
+
+    other.data = nullptr;
+    other.capacity = 0;
+    other.size = 0;
+
+    return *this;
+}
+
+template <typename T>
 DynamicArray<T>::~DynamicArray()
 {
     delete[] data;
@@ -57,12 +95,16 @@ int DynamicArray<T>::length() const
 template <typename T>
 T &DynamicArray<T>::operator[](int i)
 {
+    if (i >= size)
+        throw "array index out of bounds";
     return data[i];
 }
 
 template <typename T>
 const T &DynamicArray<T>::operator[](int i) const
 {
+    if (i >= size)
+        throw "array index out of bounds";
     return data[i];
 }
 

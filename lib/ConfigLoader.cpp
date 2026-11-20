@@ -86,24 +86,97 @@ void ConfigLoader::parseToken(const Token &token)
         parseLocations(token.content);
         break;
 
+    case Token::Type::PROBLEM_CATEGORY:
+        parseProblem(token.content);
+        break;
+
+    case Token::Type::TECHNICIANS:
+        parseTechnicians(token.content);
+        break;
+
+    case Token::Type::TICKET:
+        parseTicket(token.content);
+        break;
+
+    case Token::Type::CANCELLATION:
+        parseCancellation(token.content);
+        break;
+
     default:
         break;
     }
 }
 
-void ConfigLoader::parseLocations(const string &locationsText)
+DynamicArray<string> splitSpaces(const string &text)
 {
-    string currentLocation;
-    for (const char &c : locationsText)
+    DynamicArray<string> result;
+    string currentWord;
+    for (const char &c : text)
     {
-        if (c == ' ' || c == '\n')
+        if (c == ' ' && !currentWord.empty())
         {
-            config.locations.pushBack(currentLocation);
-            currentLocation = "";
+            result.pushBack(currentWord);
+            currentWord = "";
         }
         else
         {
-            currentLocation += c;
+            currentWord += c;
         }
     }
+    if (!currentWord.empty())
+        result.pushBack(currentWord);
+    return result;
+}
+
+void ConfigLoader::parseLocations(const string &locationsText)
+{
+    config.locations = std::move(splitSpaces(locationsText));
+}
+
+void ConfigLoader::parseProblem(const string &text)
+{
+    DynamicArray<string> args = splitSpaces(text);
+    config.problems.pushBack({
+        .code = args[0],
+        .duration = stoi(args[1]),
+    });
+}
+
+void ConfigLoader::parseTechnicians(const string &text)
+{
+    auto args = splitSpaces(text);
+    config.stCount = stoi(args[0]);
+    config.gtCount = stoi(args[1]);
+}
+
+void ConfigLoader::parseTicket(const string &text)
+{
+    auto args = splitSpaces(text);
+
+    Ticket::Type type = args[0] == "NR"   ? Ticket::Type::NORMAL
+                        : args[0] == "SR" ? Ticket::Type::SPECIALISED
+                                          : Ticket::Type::URGENT;
+    Ticket ticket = {
+        .id = stoi(args[2]),
+        .type = type,
+        .problemCode = stoi(args[4]),
+        .locationId = stoi(args[3]),
+        .requestTime = stoi(args[1]),
+        .assignmentTime = -1,
+        .urgencyLevel = -1,
+    };
+
+    if (ticket.type == Ticket::Type::URGENT)
+        ticket.urgencyLevel = stoi(args[5]);
+
+    config.tickets.pushBack(ticket);
+}
+
+void ConfigLoader::parseCancellation(const string &text)
+{
+    auto args = splitSpaces(text);
+    config.cancellations.pushBack({
+        .ticketId = stoi(args[1]),
+        .cancellationTime = stoi(args[0]),
+    });
 }

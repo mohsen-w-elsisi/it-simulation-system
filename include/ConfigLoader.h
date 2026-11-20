@@ -12,9 +12,9 @@ struct AppConfig
     int gtCount;
     int stCount;
     DynamicArray<string> locations;
-    DynamicArray<string> problemCategories;
-    DynamicArray<int> problemDurations;
+    DynamicArray<ProblemType> problems;
     DynamicArray<Ticket> tickets;
+    DynamicArray<Cancellation> cancellations;
 };
 
 struct Token
@@ -52,5 +52,5 @@ private:
     void parseProblem(const string &text);
     void parseTicket(const string &text);
     void parseTechnicians(const string &text);
-    void parseCancellations(const string &text);
+    void parseCancellation(const string &text);
 };

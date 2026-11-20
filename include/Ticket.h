@@ -2,35 +2,32 @@
 #include <string>
 using namespace std;
 
-enum class TicketType
-{
-    NORMAL,
-    SPECIALISED,
-    URGENT,
-};
-
 struct ProblemType
 {
-    int code;
-    string name;
+    string code;
     int duration;
 };
 
 struct Ticket
 {
+
+    enum class Type
+    {
+        NORMAL,
+        SPECIALISED,
+        URGENT,
+    };
+
     int id;
-    TicketType type;
-    const ProblemType &problem;
-    const string &location;
+    Type type;
+    int problemCode;
+    int locationId;
     int requestTime, assignmentTime;
     int urgencyLevel;
+};
 
-    Ticket(int id, TicketType type, const ProblemType &problem, const string &location, int requestTime)
-        : id(id), type(type), problem(problem), location(location),
-          requestTime(requestTime), assignmentTime(-1), urgencyLevel(0) {}
-
-    Ticket(int id, TicketType type, const ProblemType &problem, const string &location, int requestTime,
-           int urgencyLevel)
-        : id(id), type(type), problem(problem), location(location),
-          requestTime(requestTime), assignmentTime(-1), urgencyLevel(urgencyLevel) {}
+struct Cancellation
+{
+    int ticketId;
+    int cancellationTime;
 };

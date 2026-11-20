@@ -3,6 +3,8 @@
 #include "Ticket.h"
 #include "Technician.h"
 #include "ITUnit.h"
+#include "UserInterface.h"
+#include "LinkedList.h"
 
 class Organiser
 {
@@ -12,7 +14,8 @@ class Organiser
     DynamicArray<string> locations;
     DynamicArray<ProblemType> problems;
 
-    LinkedList<Ticket *> archive;
+    LinkedList<Ticket *> completedTickets;
+    LinkedList<Ticket *> cancelledTickets;
 
     ITUnit itUnit;
     UserInterface ui;
@@ -26,4 +29,4 @@ public:
 
 private:
     void updateITUnit();
-}
+};

@@ -62,6 +62,7 @@ foreach(TEST_SOURCE IN LISTS TEST_SOURCES)
     add_test(
         NAME ${TEST_NAME}
         COMMAND $<TARGET_FILE:${TEST_NAME}Test>
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/tests"
     )
 endforeach()
 

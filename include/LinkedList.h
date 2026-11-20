@@ -17,6 +17,7 @@ public:
 
     int length() const;
     bool isEmpty() const;
+    bool contains(const T &data) const;
     T &operator[](int i);
     const T &operator[](int i) const;
     void pushFront(T data);

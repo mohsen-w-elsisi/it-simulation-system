@@ -1,4 +1,5 @@
 class UserInterface
 {
-    // I have no idea
-}
+public:
+    UserInterface();
+};

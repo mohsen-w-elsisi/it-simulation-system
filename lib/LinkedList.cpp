@@ -1,4 +1,5 @@
 #include "LinkedList.h"
+#include "Ticket.h"
 
 template <typename T>
 struct Node
@@ -33,7 +34,8 @@ LinkedList<T>::LinkedList(T *data, unsigned int length)
 template <typename T>
 LinkedList<T>::~LinkedList()
 {
-    /// TODO
+    while (first != nullptr)
+        remove(0);
 }
 
 template <typename T>
@@ -53,6 +55,19 @@ template <typename T>
 bool LinkedList<T>::isEmpty() const
 {
     return first == nullptr;
+}
+
+template <typename T>
+bool LinkedList<T>::contains(const T &data) const
+{
+    const Node<T> *curNode = first;
+    while (curNode != nullptr)
+    {
+        if (curNode->data == data)
+            return true;
+        curNode = curNode->next;
+    }
+    return false;
 }
 
 template <typename T>
@@ -161,4 +176,6 @@ std::ostream &operator<<(std::ostream &stream, const LinkedList<T> &list)
 }
 
 template class LinkedList<int>;
+template class LinkedList<Ticket *>;
+
 template std::ostream &operator<<(std::ostream &, const LinkedList<int> &);

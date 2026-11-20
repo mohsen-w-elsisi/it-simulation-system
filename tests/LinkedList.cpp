@@ -35,6 +35,11 @@ int main()
     assert(list.length() == 2);
     assert(list[0] == 2);
 
+    assert(list.contains(2));
+    assert(list.contains(4));
+    assert(!list.contains(1));
+    assert(!list.contains(99));
+
     int values[] = {5, 6, 7};
     LinkedList<int> fromArray(values, 3);
     assert(fromArray.length() == 3);

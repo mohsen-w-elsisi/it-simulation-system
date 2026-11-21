@@ -159,8 +159,8 @@ void ConfigLoader::parseTicket(const string &text)
     Ticket ticket = {
         .id = stoi(args[2]),
         .type = type,
-        .problemCode = stoi(args[4]),
-        .locationId = stoi(args[3]),
+        .problemCode = stoi(args[4]) - 1,
+        .locationId = stoi(args[3]) - 1,
         .requestTime = stoi(args[1]),
         .assignmentTime = -1,
         .urgencyLevel = -1,

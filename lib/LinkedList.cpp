@@ -94,6 +94,11 @@ template <typename T>
 void LinkedList<T>::pushBack(T data)
 {
     Node<T> *newNode = new Node<T>(data);
+    if (isEmpty())
+    {
+        first = newNode;
+        return;
+    }
     last()->next = newNode;
 }
 

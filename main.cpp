@@ -1,6 +1,8 @@
-#include <iostream>
+#include "Organiser.h"
 
 int main(int, char **)
 {
-    std::cout << "Hello, from it-simulation-system!\n";
+    Organiser organiser;
+    organiser.initialise();
+    organiser.run();
 }

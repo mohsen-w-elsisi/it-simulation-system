@@ -23,9 +23,12 @@ class Organiser
     int currentTIme = 0;
 
 public:
-    Organiser(string configFileName);
+    Organiser();
 
+    void initialise();
     void run();
+
+    void runTest();
 
 private:
     void updateITUnit();

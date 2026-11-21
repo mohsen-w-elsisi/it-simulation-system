@@ -1,7 +1,23 @@
 #include "Technician.h"
+#include <ostream>
 
 Technician::Technician() : id(-1), type(Type::GENERAL), currentAssignment(nullptr) {}
 Technician::Technician(int id, Type type) : id(id), type(type), currentAssignment(nullptr) {}
+
+int Technician::getId() const
+{
+    return id;
+}
+
+Technician::Type Technician::getType() const
+{
+    return type;
+}
+
+const Ticket *Technician::getCurrentAssignment() const
+{
+    return currentAssignment;
+}
 
 bool Technician::isAssigned() const
 {

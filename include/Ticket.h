@@ -1,4 +1,5 @@
 #pragma once
+#include <ostream>
 #include <string>
 #include "DynamicArray.h"
 using namespace std;
@@ -30,6 +31,13 @@ struct Ticket
     {
         return problems[problemCode].duration;
     }
+
+    inline string location(const DynamicArray<string> &locations) const
+    {
+        return locations[locationId];
+    }
+
+    friend ostream &operator<<(ostream &out, const Ticket &ticket);
 };
 
 struct Cancellation
@@ -37,3 +45,5 @@ struct Cancellation
     int ticketId;
     int cancellationTime;
 };
+
+ostream &operator<<(ostream &out, Ticket::Type type);
